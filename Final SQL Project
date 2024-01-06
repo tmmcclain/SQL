@@ -1,0 +1,84 @@
+# Here are the questions and answers to the final project?
+
+
+
+#1 Show Customers (their full names, customer ID, and country) who are not in the US.
+select firstname,lastname
+,customerid
+,country
+from chinook.customers
+where country <>'USA';
+
+#2. Show only the Customers from Brazil.
+Select firstname,lastname
+,customerid
+,country
+from chinook.customers
+where country= 'Brazil';
+
+#3 Find the Invoices of customers who are from Brazil. The resulting table should show the customer's full name,
+
+Select cust.firstname, cust.lastname,inv.invoiceid
+,inv.invoicedate
+,inv.Billingcountry
+From chinook.customers cust
+left join chinook.invoices inv
+on cust.customerid=inv.customerid
+where billingcountry= 'Brazil';
+select * from chinook.employees
+where title='Sales Support Agent';
+select distinct billingcountry
+from chinook.invoices;
+select emp.lastname, emp.firstname, inv.invoiceid
+from  chinook.employees emp
+join chinook.customers cust
+on cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv 
+ON Inv.CustomerId = cust.CustomerId;
+select cust.firstname, cust.lastname, cust.country,emp. firstname, emp.lastname, inv.total
+from chinook.employees emp
+join chinook.customers cust
+on cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv 
+ON Inv.CustomerId = cust.CustomerId;
+Select count(*)
+from chinook.invoices
+where invoicedate between '2009-01-01' and '2009-12-31';
+Select sum (total)
+from chinook.invoices
+where invoicedate between '2009-01-01' and '2009-12-31';
+Select track.name,inv.invoiceid
+from chinook.tracks track
+left join chinook.invoices inv
+on track.trackid= inv.invoiceid;
+Select track.name,track.composer, inv.invoiceid
+from chinook.tracks track
+left join chinook.invoices inv
+on track.trackid= inv.invoiceid;
+SELECT t.Name AS 'Track Name', a.Title AS 'Album Title', m.Name AS 'Media Type', g.Name AS 'Genre'
+FROM chinook.tracks t
+JOIN chinook.Albums a 
+on a.AlbumId = t.AlbumId
+JOIN chinook.Media_Types m
+on m.MediaTypeId = t.MediaTypeId
+JOIN chinook.Genres g
+on g.GenreId = t.GenreId;
+SELECT emp.FirstName, emp.LastName,
+ROUND(SUM(Inv.Total), 2) as 'Total Sales' 
+FROM chinook.Employees emp
+JOIN chinook.Customers cust 
+ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv 
+ON Inv.CustomerId = cust.CustomerId
+WHERE emp.Title = 'Sales Support Agent' 
+GROUP BY emp.FirstName;
+SELECT emp.FirstName, emp.LastName,
+ROUND(SUM(Inv.Total), 2) as 'Total Sales' 
+FROM chinook.Employees emp
+JOIN chinook.Customers cust 
+ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv 
+ON Inv.CustomerId = cust.CustomerId
+WHERE emp.Title = 'Sales Support Agent' 
+GROUP BY emp.FirstName 
+ORDER BY (round(sum(Inv.Total), 2))  DESC LIMIT 1;
